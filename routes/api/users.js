@@ -3,6 +3,9 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const User = require('../../models/User');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const config = require('config');
+const secretKey = config.get('jtwSecretKey');
 
 router.post(
   '/',
@@ -49,7 +52,13 @@ router.post(
 
       await user.save();
 
-      res.status(200).json(user);
+      const jwtPayload = { user: { id: user.id } };
+
+      jwt.sign(jwtPayload, secretKey, { expiresIn: '1d' }, (err, token) => {
+        if (err) throw err;
+
+        res.status(200).json({ token });
+      });
     } catch (error) {
       res.status(500, `Internal Server Error ${error}`);
     }

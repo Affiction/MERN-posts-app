@@ -1,3 +1,4 @@
 {
-  "mongoDB": "mongodb+srv://kmax:Qwerty12@postsapp-f92ut.mongodb.net/test?retryWrites=true&w=majority"
+  "mongoDB": "mongodb+srv://kmax:Qwerty12@postsapp-f92ut.mongodb.net/test?retryWrites=true&w=majority",
+  "jtwSecretKey": "secretKey"
 }
