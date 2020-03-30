@@ -145,4 +145,38 @@ router.post(
   }
 );
 
+// @route POST api/posts/comment/:id/:comment_id
+// @desc Delete comment with specific ID
+// @access private
+router.delete('/comment/:id/:comment_id', authMiddleware, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    const comment = post.comments.find(
+      comment => comment.id === req.params.comment_id
+    );
+
+    if (!comment) {
+      return res.status(404).json({ message: "Comment doesn't exist" });
+    }
+
+    if (comment.user.toString() !== req.user.id) {
+      return res.status(401).json({ message: 'Not authorized' });
+    }
+
+    const updatedComments = post.comments.filter(
+      comment => comment.id !== req.params.comment_id
+    );
+
+    post.comments = [...updatedComments];
+
+    await post.save();
+
+    res.status(204).send();
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json('Internal Server Error');
+  }
+});
+
 module.exports = router;
