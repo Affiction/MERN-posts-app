@@ -63,7 +63,9 @@ router.post(
         res.status(200).json({ token });
       });
     } catch (error) {
-      res.status(500, `Internal Server Error`);
+      console.error(error.message);
+
+      res.status(500).json('Internal Server Error');
     }
   }
 );

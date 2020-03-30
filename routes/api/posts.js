@@ -37,7 +37,9 @@ router.post(
 
       res.status(200).json(post);
     } catch (error) {
-      res.status(500, `Internal Server Error`);
+      console.error(error.message);
+
+      res.status(500).json('Internal Server Error');
     }
   }
 );
@@ -51,7 +53,9 @@ router.get('/', authMiddleware, async (req, res) => {
 
     res.status(200).json(posts);
   } catch (error) {
-    res.status(500, `Internal Server Error`);
+    console.error(error.message);
+
+    res.status(500).json('Internal Server Error');
   }
 });
 
@@ -68,11 +72,13 @@ router.get('/:id', authMiddleware, async (req, res) => {
 
     res.status(200).json(post);
   } catch (error) {
+    console.error(error.message);
+
     if (error.kind == 'ObjectId') {
       return res.status(400).json({ errors: [{ message: 'Post not found' }] });
     }
 
-    res.status(500, `Internal Server Error`);
+    res.status(500).json('Internal Server Error');
   }
 });
 
@@ -95,11 +101,13 @@ router.delete('/:id', authMiddleware, async (req, res) => {
 
     res.status(204).send();
   } catch (error) {
+    console.error(error.message);
+
     if (error.kind == 'ObjectId') {
       return res.status(400).json({ errors: [{ message: 'Post not found' }] });
     }
 
-    res.status(500, `Internal Server Error`);
+    res.status(500).json('Internal Server Error');
   }
 });
 
@@ -140,7 +148,9 @@ router.post(
 
       res.status(200).json(post);
     } catch (error) {
-      res.status(500, `Internal Server Error`);
+      console.error(error.message);
+
+      res.status(500).json('Internal Server Error');
     }
   }
 );
@@ -173,7 +183,7 @@ router.delete('/comment/:id/:comment_id', authMiddleware, async (req, res) => {
 
     res.status(204).send();
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
 
     res.status(500).json('Internal Server Error');
   }
