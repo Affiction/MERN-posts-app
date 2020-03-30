@@ -16,7 +16,7 @@ app.use(express.json({ extended: false }));
 
 // Routes
 app.use('/api/auth', auth);
-app.use('/api/posts', posts);
 app.use('/api/users', users);
+app.use('/api/posts', posts);
 
 app.listen(PORT, () => console.log('started on port', PORT));

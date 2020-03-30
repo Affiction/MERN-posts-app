@@ -7,6 +7,9 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const secretKey = config.get('jtwSecretKey');
 
+// @route POST api/users
+// @desc Create user
+// @access public
 router.post(
   '/',
   [
