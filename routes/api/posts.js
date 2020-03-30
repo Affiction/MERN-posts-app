@@ -55,4 +55,25 @@ router.get('/', authMiddleware, async (req, res) => {
   }
 });
 
+// @route GET api/posts/:id
+// @desc Get post by ID
+// @access private
+router.get('/:id', authMiddleware, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+
+    if (!post) {
+      return res.status(400).json({ errors: [{ message: 'Post not found' }] });
+    }
+
+    res.status(200).json(post);
+  } catch (error) {
+    if (error.kind == 'ObjectId') {
+      return res.status(400).json({ errors: [{ message: 'Post not found' }] });
+    }
+
+    res.status(500, `Internal Server Error`);
+  }
+});
+
 module.exports = router;
