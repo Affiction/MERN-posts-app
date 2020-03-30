@@ -103,4 +103,46 @@ router.delete('/:id', authMiddleware, async (req, res) => {
   }
 });
 
+// @route POST api/posts/comment/:id
+// @desc Comment for post
+// @access private
+router.post(
+  '/comment/:id',
+  [
+    authMiddleware,
+    [
+      check('text', 'Text is required')
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    const validationErrors = validationResult(req);
+    const userId = req.user.id;
+
+    if (!validationErrors.isEmpty()) {
+      return res.status(400).json({ errors: validationErrors.array() });
+    }
+
+    try {
+      const user = await User.findById(userId).select('-password');
+      const post = await Post.findById(req.params.id);
+      const newComment = {
+        user: userId,
+        name: user.name,
+        text: req.body.text
+      };
+      const updatedCommentsList = [...post.comments, newComment];
+
+      post.comments = updatedCommentsList;
+
+      await post.save();
+
+      res.status(200).json(post);
+    } catch (error) {
+      res.status(500, `Internal Server Error`);
+    }
+  }
+);
+
 module.exports = router;
