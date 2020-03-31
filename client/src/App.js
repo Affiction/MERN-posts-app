@@ -1,7 +1,7 @@
 import '../node_modules/bulma/css/bulma.min.css';
 
 import React, { useEffect } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -39,6 +39,8 @@ const App = () => {
         <div className="container">
           <Alert />
           <Switch>
+            <Redirect exact from="/" to="/posts" />
+
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <PrivateRoute exact path="/posts" component={Posts} />
