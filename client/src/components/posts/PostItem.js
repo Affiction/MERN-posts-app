@@ -35,7 +35,7 @@ const PostItem = ({ text, name, date, comments, user, _id: id }) => {
   );
 
   return (
-    <div className="card">
+    <div className="card" style={{ marginBottom: '30px' }}>
       <div className="card-content">
         {id === user ? (
           <button className="delete" aria-label="delete"></button>

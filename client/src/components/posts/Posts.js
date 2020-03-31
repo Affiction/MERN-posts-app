@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { getPosts } from '../../actions';
 import PostItem from './PostItem';
+import PostForm from './PostForm';
 
 const Posts = ({ getPosts, posts: { loading, posts }, user }) => {
   useEffect(() => {
@@ -13,6 +14,8 @@ const Posts = ({ getPosts, posts: { loading, posts }, user }) => {
   return (
     <Fragment>
       <h1 className="title has-text-centered">Posts</h1>
+
+      <PostForm />
 
       {loading ? (
         <span>Loading...</span>

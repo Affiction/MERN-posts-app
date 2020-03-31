@@ -1,4 +1,9 @@
-import { GET_POSTS_SUCCESS, GET_POSTS_FAILURE } from '../actions';
+import {
+  GET_POSTS_SUCCESS,
+  GET_POSTS_FAILURE,
+  ADD_POST_SUCCESS,
+  ADD_POST_FAILURE
+} from '../actions';
 
 const initialState = {
   posts: [],
@@ -22,6 +27,13 @@ export default function(state = initialState, action) {
       return {
         ...state,
         error: payload,
+        loading: false
+      };
+
+    case ADD_POST_SUCCESS:
+      return {
+        ...state,
+        posts: [...state.posts, payload],
         loading: false
       };
 
