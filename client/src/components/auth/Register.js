@@ -51,6 +51,7 @@ export const Register = ({ setAlert, register }) => {
                   name="name"
                   value={name}
                   onChange={e => handleChange(e)}
+                  required
                 />
               </div>
             </div>
@@ -70,6 +71,7 @@ export const Register = ({ setAlert, register }) => {
                   name="email"
                   value={email}
                   onChange={e => handleChange(e)}
+                  required
                 />
               </div>
             </div>
@@ -89,6 +91,8 @@ export const Register = ({ setAlert, register }) => {
                   name="password"
                   value={password}
                   onChange={e => handleChange(e)}
+                  required
+                  minLength="6"
                 />
               </div>
             </div>
@@ -107,6 +111,8 @@ export const Register = ({ setAlert, register }) => {
                   name="confirmPassword"
                   value={confirmPassword}
                   onChange={e => handleChange(e)}
+                  required
+                  minLength="6"
                 />
               </div>
             </div>
