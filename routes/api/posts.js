@@ -146,7 +146,7 @@ router.post(
 
       await post.save();
 
-      res.status(200).json(post);
+      res.status(200).json(post.comments);
     } catch (error) {
       console.error(error.message);
 
