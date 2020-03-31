@@ -11,6 +11,7 @@ const PostItem = ({
   user,
   _id: id,
   authUser,
+  deletePost,
   deleteComment
 }) => {
   const [visible, toggle] = useState(false);
@@ -54,6 +55,7 @@ const PostItem = ({
         className="delete"
         aria-label="delete"
         style={{ position: 'absolute', right: '20px' }}
+        onClick={e => deletePost(id)}
       ></button>
     ) : null;
 

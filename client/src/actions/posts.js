@@ -9,6 +9,9 @@ export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
 export const ADD_POST_COMMENT_SUCCESS = 'ADD_POST_COMMENT_SUCCESS';
 export const ADD_POST_COMMENT_FAILURE = 'ADD_POST_COMMENT_FAILURE';
 
+export const REMOVE_POST_SUCCESS = 'REMOVE_POST_SUCCESS';
+export const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
+
 export const REMOVE_POST_COMMENT_SUCCESS = 'REMOVE_POST_COMMENT_SUCCESS';
 export const REMOVE_POST_COMMENT_FAILURE = 'REMOVE_POST_COMMENT_FAILURE';
 
@@ -79,8 +82,25 @@ export const addCommentToPost = (postId, formData) => async dispatch => {
   }
 };
 
+export const deletePost = postId => async dispatch => {
+  try {
+    const res = await axios.delete(`/api/posts/${postId}`);
+
+    dispatch({
+      type: REMOVE_POST_SUCCESS,
+      payload: { postId }
+    });
+  } catch (error) {
+    const { statusText, status } = error.response;
+
+    dispatch({
+      type: REMOVE_POST_FAILURE,
+      payload: { msg: statusText, status }
+    });
+  }
+};
+
 export const deleteCommentFromPost = (postId, commentId) => async dispatch => {
-  console.log('postId, commentId:', postId, commentId);
   try {
     const res = await axios.delete(`/api/posts/comment/${postId}/${commentId}`);
 

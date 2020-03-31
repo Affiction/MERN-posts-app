@@ -3,6 +3,7 @@ import {
   GET_POSTS_FAILURE,
   ADD_POST_SUCCESS,
   ADD_POST_COMMENT_SUCCESS,
+  REMOVE_POST_SUCCESS,
   REMOVE_POST_COMMENT_SUCCESS
 } from '../actions';
 
@@ -34,7 +35,7 @@ export default function(state = initialState, action) {
     case ADD_POST_SUCCESS:
       return {
         ...state,
-        posts: [...state.posts, payload],
+        posts: [payload, ...state.posts],
         loading: false
       };
 
@@ -47,6 +48,12 @@ export default function(state = initialState, action) {
             : post
         ),
         loading: false
+      };
+
+    case REMOVE_POST_SUCCESS:
+      return {
+        ...state,
+        posts: state.posts.filter(post => post._id !== payload.postId)
       };
 
     case REMOVE_POST_COMMENT_SUCCESS:
