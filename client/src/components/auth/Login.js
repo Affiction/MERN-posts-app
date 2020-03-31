@@ -1,6 +1,11 @@
+import PropTypes from 'prop-types';
 import React, { Fragment, useState } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
-export const Login = () => {
+import { login } from '../../actions';
+
+export const Login = ({ login, isAuthorized }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -8,15 +13,19 @@ export const Login = () => {
 
   const { email, password } = formData;
 
-  const handleSubmit = e => {
-    e.preventDefault();
-
-    console.log(formData);
-  };
-
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    login(email, password);
+  };
+
+  if (isAuthorized) {
+    return <Redirect to="/posts" />;
+  }
 
   return (
     <Fragment>
@@ -81,4 +90,13 @@ export const Login = () => {
   );
 };
 
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthorized: PropTypes.bool
+};
+
+const mapStateToProps = state => ({
+  isAuthorized: state.auth.isAuth
+});
+
+export default connect(mapStateToProps, { login })(Login);
