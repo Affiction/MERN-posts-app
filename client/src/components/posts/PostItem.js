@@ -3,7 +3,16 @@ import React, { useState } from 'react';
 import PostComment from './PostComment';
 import PostCommentForm from './PostCommentForm';
 
-const PostItem = ({ text, name, date, comments, user, _id: id, authUser }) => {
+const PostItem = ({
+  text,
+  name,
+  date,
+  comments,
+  user,
+  _id: id,
+  authUser,
+  deleteComment
+}) => {
   const [visible, toggle] = useState(false);
 
   const toggleMessages = e => {
@@ -26,7 +35,12 @@ const PostItem = ({ text, name, date, comments, user, _id: id, authUser }) => {
     <div className="container">
       <div className="notification">
         {comments.map(comment => (
-          <PostComment key={comment._id} {...comment} authUser={authUser} />
+          <PostComment
+            key={comment._id}
+            {...comment}
+            authUser={authUser}
+            deleteComment={deleteComment.bind(this, id)}
+          />
         ))}
 
         <PostCommentForm postId={id} />
@@ -34,16 +48,19 @@ const PostItem = ({ text, name, date, comments, user, _id: id, authUser }) => {
     </div>
   );
 
+  const deletePostBtn =
+    authUser && authUser._id === user ? (
+      <button
+        className="delete"
+        aria-label="delete"
+        style={{ position: 'absolute', right: '20px' }}
+      ></button>
+    ) : null;
+
   return (
     <div className="card" style={{ marginBottom: '30px' }}>
       <div className="card-content">
-        {authUser && authUser._id === user ? (
-          <button
-            className="delete"
-            aria-label="delete"
-            style={{ position: 'absolute', right: '20px' }}
-          ></button>
-        ) : null}
+        {deletePostBtn}
 
         <div className="media">
           <div className="media-content">

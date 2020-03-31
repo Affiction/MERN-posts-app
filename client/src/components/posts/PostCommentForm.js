@@ -35,7 +35,7 @@ const PostCommentForm = ({ postId, addCommentToPost }) => {
       <div className="field is-grouped is-grouped-right">
         <p className="control">
           <button type="submit" className="button is-success is-medium">
-            Add Post
+            Add comment
           </button>
         </p>
       </div>

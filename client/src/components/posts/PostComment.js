@@ -1,10 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const PostComment = ({ text, name, user, authUser }) => {
+const PostComment = ({
+  text,
+  name,
+  user,
+  authUser,
+  deleteComment,
+  _id: id
+}) => {
   const deleteBtn =
     authUser && authUser._id === user ? (
-      <button className="delete" aria-label="delete"></button>
+      <button
+        className="delete"
+        aria-label="delete"
+        onClick={e => deleteComment(id)}
+      ></button>
     ) : null;
 
   return (
