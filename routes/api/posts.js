@@ -156,9 +156,9 @@ router.post(
 );
 
 // @route PUT api/posts/comment/:id/:comment_id
-// @desc DUpdate specific comment
+// @desc Update specific comment
 // @access private
-router.post('/comment/:id/:comment_id', authMiddleware, async (req, res) => {
+router.put('/comment/:id/:comment_id', authMiddleware, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     const comment = post.comments.find(
