@@ -12,6 +12,8 @@ export const GET_USER_FAILURE = 'GET_USER_FAILURE';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
+export const LOGOUT = 'LOGOUT';
+
 export const register = ({ name, email, password }) => async dispatch => {
   const config = {
     headers: {
@@ -98,3 +100,6 @@ export const login = (email, password) => async dispatch => {
     });
   }
 };
+
+export const logout = (email, password) => async dispatch =>
+  dispatch({ type: LOGOUT });

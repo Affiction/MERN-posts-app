@@ -27,6 +27,7 @@ const App = () => {
   useEffect(() => {
     store.dispatch(getUser(), []);
   });
+
   return (
     <Provider store={store}>
       <BrowserRouter>
