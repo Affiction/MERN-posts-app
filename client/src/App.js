@@ -13,6 +13,10 @@ import Navbar from './components/layout/Navbar';
 import Alert from './components/layout/Alert';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
+import Posts from './components/posts/Posts';
+
+// HOC
+import PrivateRoute from './hocs/PrivateRoute';
 
 // Utils
 import { axiosHeaderToken } from './utils';
@@ -37,9 +41,7 @@ const App = () => {
           <Switch>
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
-            <Route exact path="/posts">
-              <h1>posts</h1>
-            </Route>
+            <PrivateRoute exact path="/posts" component={Posts} />
           </Switch>
         </div>
       </BrowserRouter>
