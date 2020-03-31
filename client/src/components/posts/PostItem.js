@@ -26,7 +26,7 @@ const PostItem = ({ text, name, date, comments, user, _id: id, authUser }) => {
     <div className="container">
       <div className="notification">
         {comments.map(comment => (
-          <PostComment key={comment._id} {...comment} />
+          <PostComment key={comment._id} {...comment} authUser={authUser} />
         ))}
 
         <PostCommentForm postId={id} />
