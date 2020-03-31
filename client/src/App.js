@@ -36,6 +36,9 @@ const App = () => {
           <Switch>
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
+            <Route exact path="/posts">
+              <h1>posts</h1>
+            </Route>
           </Switch>
         </div>
       </BrowserRouter>
