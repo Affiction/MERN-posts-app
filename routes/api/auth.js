@@ -18,8 +18,6 @@ router.get('/', authMiddleware, async (req, res) => {
 
     res.status(200).json(user);
   } catch (error) {
-    console.error(error.message);
-
     res.status(500).json('Internal Server Error');
   }
 });
@@ -50,7 +48,7 @@ router.post(
       if (isUserNotExist) {
         return res
           .status(400)
-          .json({ errors: [{ message: 'Credentials invalid' }] });
+          .json({ errors: [{ msg: 'Credentials invalid' }] });
       }
 
       const isPasswordMatch = await bcrypt.compare(password, user.password);
@@ -58,7 +56,7 @@ router.post(
       if (!isPasswordMatch) {
         return res
           .status(400)
-          .json({ errors: [{ message: 'Credentials invalid' }] });
+          .json({ errors: [{ msg: 'Credentials invalid' }] });
       }
 
       const jwtPayload = { user: { id: user.id } };

@@ -67,7 +67,7 @@ router.get('/:id', authMiddleware, async (req, res) => {
     const post = await Post.findById(req.params.id);
 
     if (!post) {
-      return res.status(400).json({ errors: [{ message: 'Post not found' }] });
+      return res.status(400).json({ errors: [{ msg: 'Post not found' }] });
     }
 
     res.status(200).json(post);
@@ -75,7 +75,7 @@ router.get('/:id', authMiddleware, async (req, res) => {
     console.error(error.message);
 
     if (error.kind == 'ObjectId') {
-      return res.status(400).json({ errors: [{ message: 'Post not found' }] });
+      return res.status(400).json({ errors: [{ msg: 'Post not found' }] });
     }
 
     res.status(500).json('Internal Server Error');
@@ -90,11 +90,11 @@ router.delete('/:id', authMiddleware, async (req, res) => {
     const post = await Post.findById(req.params.id);
 
     if (!post) {
-      return res.status(404).json({ message: 'Post not found' });
+      return res.status(404).json({ msg: 'Post not found' });
     }
 
     if (post.user.toString() !== req.user.id) {
-      return res.status(401).json({ message: 'Not authorized' });
+      return res.status(401).json({ msg: 'Not authorized' });
     }
 
     await post.remove();
@@ -104,7 +104,7 @@ router.delete('/:id', authMiddleware, async (req, res) => {
     console.error(error.message);
 
     if (error.kind == 'ObjectId') {
-      return res.status(400).json({ errors: [{ message: 'Post not found' }] });
+      return res.status(400).json({ errors: [{ msg: 'Post not found' }] });
     }
 
     res.status(500).json('Internal Server Error');
@@ -166,11 +166,11 @@ router.delete('/comment/:id/:comment_id', authMiddleware, async (req, res) => {
     );
 
     if (!comment) {
-      return res.status(404).json({ message: "Comment doesn't exist" });
+      return res.status(404).json({ msg: "Comment doesn't exist" });
     }
 
     if (comment.user.toString() !== req.user.id) {
-      return res.status(401).json({ message: 'Not authorized' });
+      return res.status(401).json({ msg: 'Not authorized' });
     }
 
     const updatedComments = post.comments.filter(

@@ -6,7 +6,7 @@ module.exports = function(req, res, next) {
   const token = req.header('x-auth-token');
 
   if (!token) {
-    return res.status(401).json({ message: 'Not authorized' });
+    return res.status(401).json({ msg: 'Not authorized' });
   }
 
   try {
@@ -16,6 +16,6 @@ module.exports = function(req, res, next) {
 
     next();
   } catch (error) {
-    res.status(401).json({ message: 'Invalid token' });
+    res.status(401).json({ msg: 'Invalid token' });
   }
 };
