@@ -97,7 +97,7 @@ export const updateComment = (
   };
 
   try {
-    const res = await axios.post(
+    const res = await axios.put(
       `/api/posts/comment/${postId}/${commentId}`,
       formData,
       config
