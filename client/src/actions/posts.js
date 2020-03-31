@@ -9,6 +9,9 @@ export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
 export const ADD_POST_COMMENT_SUCCESS = 'ADD_POST_COMMENT_SUCCESS';
 export const ADD_POST_COMMENT_FAILURE = 'ADD_POST_COMMENT_FAILURE';
 
+export const UPDATE_POST_COMMENT_SUCCESS = 'UPDATE_POST_COMMENT_SUCCESS';
+export const UPDATE_POST_COMMENT_FAILURE = 'UPDATE_POST_COMMENT_FAILURE';
+
 export const REMOVE_POST_SUCCESS = 'REMOVE_POST_SUCCESS';
 export const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
 
@@ -77,6 +80,38 @@ export const addCommentToPost = (postId, formData) => async dispatch => {
 
     dispatch({
       type: ADD_POST_COMMENT_FAILURE,
+      payload: { msg: statusText, status }
+    });
+  }
+};
+
+export const updateComment = (
+  postId,
+  commentId,
+  formData
+) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  try {
+    const res = await axios.post(
+      `/api/posts/comment/${postId}/${commentId}`,
+      formData,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_POST_COMMENT_SUCCESS,
+      payload: { postId, comments: res.data }
+    });
+  } catch (error) {
+    const { statusText, status } = error.response;
+
+    dispatch({
+      type: UPDATE_POST_COMMENT_FAILURE,
       payload: { msg: statusText, status }
     });
   }

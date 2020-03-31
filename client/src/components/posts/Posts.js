@@ -2,7 +2,13 @@ import React, { useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getPosts, deleteCommentFromPost, deletePost } from '../../actions';
+import {
+  getPosts,
+  addCommentToPost,
+  updateComment,
+  deleteCommentFromPost,
+  deletePost
+} from '../../actions';
 import PostItem from './PostItem';
 import PostForm from './PostForm';
 
@@ -10,12 +16,22 @@ const Posts = ({
   getPosts,
   posts: { loading, posts },
   user,
+  addCommentToPost,
+  updateComment,
   deletePost,
   deleteCommentFromPost
 }) => {
   useEffect(() => {
     getPosts();
   }, [getPosts]);
+
+  const handleAddComment = (postId, formData) => {
+    addCommentToPost(postId, formData);
+  };
+
+  const handleUpdateComment = (postId, commentId, formData) => {
+    updateComment(postId, commentId, formData);
+  };
 
   const handleDeletePost = postId => {
     deletePost(postId);
@@ -31,7 +47,7 @@ const Posts = ({
 
       <PostForm />
 
-      {loading ? (
+      {loading && !user ? (
         <span>Loading...</span>
       ) : (
         posts.map(post => (
@@ -39,6 +55,8 @@ const Posts = ({
             key={post._id}
             {...post}
             authUser={user}
+            addComment={handleAddComment}
+            updateComment={handleUpdateComment}
             deletePost={handleDeletePost}
             deleteComment={handleDeleteComment}
           />
@@ -60,8 +78,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   getPosts,
+  addCommentToPost,
   deleteCommentFromPost,
-  deletePost
+  deletePost,
+  updateComment
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Posts);

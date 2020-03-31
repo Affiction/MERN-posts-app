@@ -155,6 +155,40 @@ router.post(
   }
 );
 
+// @route PUT api/posts/comment/:id/:comment_id
+// @desc DUpdate specific comment
+// @access private
+router.post('/comment/:id/:comment_id', authMiddleware, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    const comment = post.comments.find(
+      comment => comment.id === req.params.comment_id
+    );
+
+    if (!comment) {
+      return res.status(404).json({ msg: "Comment doesn't exist" });
+    }
+
+    if (comment.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: 'Not authorized' });
+    }
+
+    const commentIndex = post.comments.findIndex(comment => {
+      return comment.id == req.params.comment_id;
+    });
+
+    post.comments[commentIndex].text = req.body.text;
+
+    await post.save();
+
+    res.status(200).send(post.comments);
+  } catch (error) {
+    console.error(error.message);
+
+    res.status(500).json('Internal Server Error');
+  }
+});
+
 // @route POST api/posts/comment/:id/:comment_id
 // @desc Delete comment with specific ID
 // @access private

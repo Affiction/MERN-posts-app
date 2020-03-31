@@ -3,6 +3,7 @@ import {
   GET_POSTS_FAILURE,
   ADD_POST_SUCCESS,
   ADD_POST_COMMENT_SUCCESS,
+  UPDATE_POST_COMMENT_SUCCESS,
   REMOVE_POST_SUCCESS,
   REMOVE_POST_COMMENT_SUCCESS
 } from '../actions';
@@ -40,6 +41,7 @@ export default function(state = initialState, action) {
       };
 
     case ADD_POST_COMMENT_SUCCESS:
+    case UPDATE_POST_COMMENT_SUCCESS:
       return {
         ...state,
         posts: state.posts.map(post =>

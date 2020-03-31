@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import PostComment from './PostComment';
 import PostCommentForm from './PostCommentForm';
@@ -11,6 +12,8 @@ const PostItem = ({
   user,
   _id: id,
   authUser,
+  addComment,
+  updateComment,
   deletePost,
   deleteComment
 }) => {
@@ -40,11 +43,12 @@ const PostItem = ({
             key={comment._id}
             {...comment}
             authUser={authUser}
+            updateComment={updateComment.bind(this, id, comment._id)}
             deleteComment={deleteComment.bind(this, id)}
           />
         ))}
 
-        <PostCommentForm postId={id} />
+        <PostCommentForm addComment={addComment.bind(this, id)} />
       </div>
     </div>
   );
@@ -83,6 +87,18 @@ const PostItem = ({
       {commentsList}
     </div>
   );
+};
+
+PostItem.propTypes = {
+  text: PropTypes.string,
+  name: PropTypes.string,
+  date: PropTypes.string,
+  comments: PropTypes.array.isRequired,
+  user: PropTypes.string.isRequired,
+  _id: PropTypes.string.isRequired,
+  addComment: PropTypes.func.isRequired,
+  deletePost: PropTypes.func.isRequired,
+  deleteComment: PropTypes.func.isRequired
 };
 
 export default PostItem;
