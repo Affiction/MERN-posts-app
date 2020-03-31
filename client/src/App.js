@@ -9,6 +9,7 @@ import store from './store';
 
 // Components
 import Navbar from './components/layout/Navbar';
+import Alert from './components/layout/Alert';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 
@@ -17,12 +18,11 @@ const App = () => (
     <BrowserRouter>
       <Navbar />
       <div className="container">
-        <div className="notification">
-          <Switch>
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/register" component={Register} />
-          </Switch>
-        </div>
+        <Alert />
+        <Switch>
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/register" component={Register} />
+        </Switch>
       </div>
     </BrowserRouter>
   </Provider>
