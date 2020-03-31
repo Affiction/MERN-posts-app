@@ -1,9 +1,13 @@
 import axios from 'axios';
 
 import { setAlert } from '../actions';
+import { axiosHeaderToken } from '../utils';
 
 export const REG_SUCCESS = 'REG_SUCCESS';
 export const REG_FAILURE = 'REG_FAILURE';
+
+export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
+export const GET_USER_FAILURE = 'GET_USER_FAILURE';
 
 export const register = ({ name, email, password }) => async dispatch => {
   const config = {
@@ -32,6 +36,27 @@ export const register = ({ name, email, password }) => async dispatch => {
 
     dispatch({
       type: REG_FAILURE
+    });
+  }
+};
+
+export const getUser = () => async dispatch => {
+  const token = localStorage.getItem('token');
+
+  if (token != null) {
+    axiosHeaderToken(token);
+  }
+
+  try {
+    const res = await axios.get('/api/auth');
+
+    dispatch({
+      type: GET_USER_SUCCESS,
+      payload: res.data
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_USER_FAILURE
     });
   }
 };
