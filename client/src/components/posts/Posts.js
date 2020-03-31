@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { getPosts } from '../../actions';
 import PostItem from './PostItem';
 
-const Posts = ({ getPosts, posts: { loading, posts } }) => {
+const Posts = ({ getPosts, posts: { loading, posts }, user }) => {
   useEffect(() => {
     getPosts();
   }, [getPosts]);
@@ -17,7 +17,7 @@ const Posts = ({ getPosts, posts: { loading, posts } }) => {
       {loading ? (
         <span>Loading...</span>
       ) : (
-        posts.map(post => <PostItem key={post._id} {...post} />)
+        posts.map(post => <PostItem key={post._id} {...post} {...user} />)
       )}
     </Fragment>
   );
@@ -29,7 +29,8 @@ Posts.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  posts: state.posts
+  posts: state.posts,
+  user: state.auth.user
 });
 
 export default connect(mapStateToProps, { getPosts })(Posts);
