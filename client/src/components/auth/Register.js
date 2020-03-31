@@ -1,6 +1,10 @@
 import React, { Fragment, useState } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-export const Register = () => {
+import { setAlert, register } from '../../actions';
+
+export const Register = ({ setAlert, register }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -20,10 +24,10 @@ export const Register = () => {
     e.preventDefault();
 
     if (isPasswordsMath) {
-      return;
+      return setAlert("Password don't match", 'is-danger');
     }
 
-    console.log(formData);
+    register({ name, email, password });
   };
 
   return (
@@ -47,7 +51,6 @@ export const Register = () => {
                   name="name"
                   value={name}
                   onChange={e => handleChange(e)}
-                  required
                 />
               </div>
             </div>
@@ -67,7 +70,6 @@ export const Register = () => {
                   name="email"
                   value={email}
                   onChange={e => handleChange(e)}
-                  required
                 />
               </div>
             </div>
@@ -87,7 +89,6 @@ export const Register = () => {
                   name="password"
                   value={password}
                   onChange={e => handleChange(e)}
-                  required
                 />
               </div>
             </div>
@@ -106,12 +107,8 @@ export const Register = () => {
                   name="confirmPassword"
                   value={confirmPassword}
                   onChange={e => handleChange(e)}
-                  required
                 />
               </div>
-              {isPasswordsMath ? (
-                <p className="help is-danger">Passwords not match!</p>
-              ) : null}
             </div>
             {/* END confirm password */}
 
@@ -131,4 +128,9 @@ export const Register = () => {
   );
 };
 
-export default Register;
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired
+};
+
+export default connect(null, { setAlert, register })(Register);
