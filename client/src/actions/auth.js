@@ -9,6 +9,9 @@ export const REG_FAILURE = 'REG_FAILURE';
 export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
 export const GET_USER_FAILURE = 'GET_USER_FAILURE';
 
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+
 export const register = ({ name, email, password }) => async dispatch => {
   const config = {
     headers: {
@@ -25,6 +28,8 @@ export const register = ({ name, email, password }) => async dispatch => {
       type: REG_SUCCESS,
       payload: res.data
     });
+
+    dispatch(getUser());
   } catch (error) {
     const errors = error.response.data.errors;
 
@@ -57,6 +62,39 @@ export const getUser = () => async dispatch => {
   } catch (error) {
     dispatch({
       type: GET_USER_FAILURE
+    });
+  }
+};
+
+export const login = (email, password) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  try {
+    const data = JSON.stringify({ email, password });
+
+    const res = await axios.post('/api/auth', data, config);
+
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data
+    });
+
+    dispatch(getUser());
+  } catch (error) {
+    const errors = error.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => {
+        dispatch(setAlert(error.msg, 'is-danger', 3000));
+      });
+    }
+
+    dispatch({
+      type: LOGIN_FAILURE
     });
   }
 };

@@ -2,8 +2,9 @@ import {
   REG_SUCCESS,
   REG_FAILURE,
   GET_USER_SUCCESS,
-  GET_USER_FAILURE
-  
+  GET_USER_FAILURE,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE
 } from '../actions';
 
 const initialState = {
@@ -18,6 +19,7 @@ export default function(state = initialState, action) {
 
   switch (type) {
     case REG_SUCCESS:
+    case LOGIN_SUCCESS:
       localStorage.setItem('token', payload.token);
       return {
         ...state,
@@ -28,6 +30,7 @@ export default function(state = initialState, action) {
 
     case REG_FAILURE:
     case GET_USER_FAILURE:
+    case LOGIN_FAILURE:
       localStorage.removeItem('token');
       return {
         ...state,
