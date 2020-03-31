@@ -7,7 +7,26 @@ const config = require('config');
 const secretKey = config.get('jtwSecretKey');
 
 const User = require('../../models/User');
+const { authMiddleware } = require('../../middleware');
 
+// @route GET api/auth
+// @desc Get user
+// @access public
+router.get('/', authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(error.message);
+
+    res.status(500).json('Internal Server Error');
+  }
+});
+
+// @route POST api/auth
+// @desc Create user
+// @access public
 router.post(
   '/',
   [
