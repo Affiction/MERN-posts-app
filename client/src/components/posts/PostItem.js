@@ -38,13 +38,12 @@ const PostItem = ({ text, name, date, comments, user, _id: id }) => {
     <div className="card" style={{ marginBottom: '30px' }}>
       <div className="card-content">
         {id === user ? (
-          <button className="delete" aria-label="delete"></button>
+          <button
+            className="delete"
+            aria-label="delete"
+            style={{ position: 'absolute', right: '20px' }}
+          ></button>
         ) : null}
-        <button
-          className="delete"
-          aria-label="delete"
-          style={{ position: 'absolute', right: '20px' }}
-        ></button>
 
         <div className="media">
           <div className="media-content">
