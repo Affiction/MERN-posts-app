@@ -20,7 +20,7 @@ const Posts = ({ getPosts, posts: { loading, posts }, user }) => {
       {loading ? (
         <span>Loading...</span>
       ) : (
-        posts.map(post => <PostItem key={post._id} {...post} {...user} />)
+        posts.map(post => <PostItem key={post._id} {...post} authUser={user} />)
       )}
     </Fragment>
   );

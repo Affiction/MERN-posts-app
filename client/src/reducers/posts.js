@@ -2,7 +2,7 @@ import {
   GET_POSTS_SUCCESS,
   GET_POSTS_FAILURE,
   ADD_POST_SUCCESS,
-  ADD_POST_FAILURE
+  ADD_POST_COMMENT_SUCCESS
 } from '../actions';
 
 const initialState = {
@@ -34,6 +34,17 @@ export default function(state = initialState, action) {
       return {
         ...state,
         posts: [...state.posts, payload],
+        loading: false
+      };
+
+    case ADD_POST_COMMENT_SUCCESS:
+      return {
+        ...state,
+        posts: state.posts.map(post =>
+          post._id == payload.postId
+            ? { ...post, comments: payload.comments }
+            : post
+        ),
         loading: false
       };
 

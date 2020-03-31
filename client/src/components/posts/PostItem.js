@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
 import PostComment from './PostComment';
+import PostCommentForm from './PostCommentForm';
 
-const PostItem = ({ text, name, date, comments, user, _id: id }) => {
+const PostItem = ({ text, name, date, comments, user, _id: id, authUser }) => {
   const [visible, toggle] = useState(false);
 
   const toggleMessages = e => {
@@ -11,18 +12,15 @@ const PostItem = ({ text, name, date, comments, user, _id: id }) => {
     toggle(!visible);
   };
 
-  const cardFooter =
-    comments.length > 0 ? (
-      <footer className="card-footer">
-        <a
-          href="#"
-          className="card-footer-item"
-          onClick={e => toggleMessages(e)}
-        >
-          Show Messages {comments.length !== 0 && `(${comments.length})`}
-        </a>
-      </footer>
-    ) : null;
+  const cardFooter = (
+    <footer className="card-footer">
+      <div className="card-footer-item"></div>
+
+      <a href="#" className="card-footer-item" onClick={e => toggleMessages(e)}>
+        Show Messages {`(${comments.length})`}
+      </a>
+    </footer>
+  );
 
   const commentsList = visible && (
     <div className="container">
@@ -30,6 +28,8 @@ const PostItem = ({ text, name, date, comments, user, _id: id }) => {
         {comments.map(comment => (
           <PostComment key={comment._id} {...comment} />
         ))}
+
+        <PostCommentForm postId={id} />
       </div>
     </div>
   );
@@ -37,7 +37,7 @@ const PostItem = ({ text, name, date, comments, user, _id: id }) => {
   return (
     <div className="card" style={{ marginBottom: '30px' }}>
       <div className="card-content">
-        {id === user ? (
+        {authUser && authUser._id === user ? (
           <button
             className="delete"
             aria-label="delete"
